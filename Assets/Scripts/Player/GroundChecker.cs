@@ -5,12 +5,26 @@ public class GroundChecker : MonoBehaviour
 {
     [SerializeField] private float _groundCheckRadius = 0.2f;
     [SerializeField] private Transform _groundCheckPointDown;
+    [SerializeField] private StickingWall _stickingWall = null;
 
     private bool _isGroundedDown;
+    private bool _isSticking;
 
     public event Action PlayerIsFlying;
     public event Action PlayerIsLanding;
     public event Action<bool> OnJumpBlocked;
+
+    private void OnEnable()
+    {
+        _stickingWall.IsStickingAnimation += PlaySticking;
+        _stickingWall.IsStopAnimation += StopSticking;
+    }
+
+    private void OnDisable()
+    {
+        _stickingWall.IsStickingAnimation -= PlaySticking;
+        _stickingWall.IsStopAnimation -= StopSticking;
+    }
 
     private void FixedUpdate()
     {
@@ -24,6 +38,11 @@ public class GroundChecker : MonoBehaviour
         if (_isGroundedDown)
         {
             PlayerIsLanding?.Invoke();
+            OnJumpBlocked?.Invoke(false);
+        }
+        else if (_isSticking)
+        {
+            PlayerIsFlying?.Invoke();
             OnJumpBlocked?.Invoke(false);
         }
         else
@@ -46,5 +65,15 @@ public class GroundChecker : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void PlaySticking()
+    {
+        _isSticking = true;
+    }
+
+    private void StopSticking()
+    {
+        _isSticking = false;
     }
 }

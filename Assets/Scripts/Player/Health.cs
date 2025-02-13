@@ -17,7 +17,10 @@ public class Health : MonoBehaviour
     private Coroutine _takeDamages;
     private WaitForSeconds _waitForSeconds;
 
+    public bool IsDead=false;
+
     public event Action PlayerDie;
+    public event Action PlayerDieAnimation;
     public event Action<float> DownHealth;
 
     private void Awake()
@@ -38,8 +41,16 @@ public class Health : MonoBehaviour
     {
         if( _health == _healthMin)
         {
+            IsDead = true;
+
+            if(_takeDamages != null)
+                StopCoroutine(_takeDamages);
+            
             _audioSource.PlayOneShot(_deathClip,0.5f);
+
             PlayerDie?.Invoke();
+            PlayerDieAnimation?.Invoke();
+
             _health = _healthMax;
             DownHealth?.Invoke(_health);
         }
@@ -55,15 +66,15 @@ public class Health : MonoBehaviour
 
     private void PlayerHit(float Damage,bool inColision)
     {
-        if (inColision)
+        if (inColision && _health!=_healthMin)
             _takeDamages= StartCoroutine(TakeDamage(Damage));
-        else if(inColision==false || _health==_healthMin)
+        else if(inColision==false)
             StopCoroutine(_takeDamages);
     }
 
     private IEnumerator TakeDamage(float Damage)
     {
-        while(_health > _healthMin)
+        while(_health > _healthMin && IsDead==false)
         {
             _health-=Damage;
 

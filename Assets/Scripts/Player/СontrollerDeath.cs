@@ -1,13 +1,24 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ÑontrollerDeath : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Mover _mover;
 
-    //public event
+    private WaitForSeconds _newWaitForSeconds;
+    private Rigidbody2D _rigidbody;
+
+    public event Action Risen;
+
+    private void Awake()
+    {
+        float delay = 2;
+        _newWaitForSeconds= new WaitForSeconds(delay);
+        _rigidbody= GetComponent<Rigidbody2D>();
+    }
 
     private void OnEnable()
     {
@@ -21,6 +32,22 @@ public class ÑontrollerDeath : MonoBehaviour
 
     private void Die()
     {
+        StartCoroutine(DeathAnimationEnd());
+    }
+
+    private IEnumerator DeathAnimationEnd()
+    {
+        _rigidbody.isKinematic = true;
+        _rigidbody.velocity = Vector2.zero;
+        _mover.enabled = false;
+
+        yield return _newWaitForSeconds;
+
+        Risen?.Invoke();
         transform.position = _spawnPoint.position;
+        _mover.enabled = true;
+        _rigidbody.isKinematic = false;
+
+        _health.IsDead=false;
     }
 }

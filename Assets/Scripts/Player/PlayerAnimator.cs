@@ -9,6 +9,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private GroundChecker _groundDetector;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Health _health;
+    [SerializeField] private ÑontrollerDeath _ñontrollerDeath;
+    [SerializeField] private StickingWall _stickingWall=null;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _runClip;
@@ -17,10 +19,12 @@ public class PlayerAnimator : MonoBehaviour
     private int _fly = Animator.StringToHash("fly");
     private int _isRun = Animator.StringToHash("isRun");
     private int _isDie = Animator.StringToHash("IsDie");
+    private int _isHooked = Animator.StringToHash("IsHooked");
 
     private bool _isJumped = false;
     private bool _inJump = true;
     private bool _hasLanded = true;
+    private bool _isStiking = false;
 
     private void OnEnable()
     {
@@ -30,6 +34,9 @@ public class PlayerAnimator : MonoBehaviour
         _groundDetector.PlayerIsFlying += PlayFlying;
         _groundDetector.PlayerIsLanding += StopFlying;
         _health.PlayerDie+=Die;
+        _ñontrollerDeath.Risen+=Alive;
+        _stickingWall.IsStickingAnimation+=PlayStiking;
+        _stickingWall.IsStopAnimation+=StopStiking;
     }
 
     private void OnDisable()
@@ -40,6 +47,9 @@ public class PlayerAnimator : MonoBehaviour
         _groundDetector.PlayerIsFlying -= PlayFlying;
         _groundDetector.PlayerIsLanding -= StopFlying;
         _health.PlayerDie-=Die;
+        _ñontrollerDeath.Risen-=Alive;
+        _stickingWall.IsStickingAnimation-=PlayStiking;
+        _stickingWall.IsStopAnimation-=StopStiking;
     }
 
     private void PlayRunning(float horizontal)
@@ -77,7 +87,15 @@ public class PlayerAnimator : MonoBehaviour
 
     private void PlayFlying()
     {
-        _animator.SetInteger(_fly, 0);
+        if (_isStiking==false)
+        {
+            _animator.SetInteger(_fly, 0);
+        }
+        else
+        {
+            _animator.SetInteger(_fly, 2);
+        }
+
         _isJumped = false;
         _inJump = true;
         _hasLanded = false;
@@ -85,7 +103,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void StopFlying()
     {
-        if (!_isJumped && _hasLanded==false)
+        if (!_isJumped && _hasLanded==false && _isStiking==false)
         {
             _animator.SetInteger(_fly, -1);
             _inJump = false;
@@ -99,8 +117,25 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+    private void PlayStiking()
+    {
+        _animator.SetBool(_isHooked, true);
+        _isStiking=true;
+    }
+    
+    private void StopStiking()
+    {
+        _animator.SetBool(_isHooked, false);
+        _isStiking=false;
+    }
+
     private void Die()
     {
         _animator.SetBool(_isDie, true);
+    }
+
+    private void Alive()
+    {
+        _animator.SetBool(_isDie, false);
     }
 }
