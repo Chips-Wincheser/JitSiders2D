@@ -9,6 +9,11 @@ public class MoverMenuCamera : MonoBehaviour
     private bool _onLevls=false;
     private bool _onMenu=false;
 
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+    }
+
     private void Update()
     {
         if (_onLevls)

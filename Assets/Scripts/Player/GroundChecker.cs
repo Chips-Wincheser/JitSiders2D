@@ -3,38 +3,44 @@ using UnityEngine;
 
 public class GroundChecker : MonoBehaviour
 {
-    [SerializeField] private float _groundCheckRadius = 0.2f;
-    [SerializeField] private Transform _groundCheckPointDown;
+    [SerializeField] private GroundTrigger _groundTrigger;
     [SerializeField] private StickingWall _stickingWall = null;
 
     private bool _isGroundedDown;
-    private bool _isSticking;
+
+    public bool IsGrounded => _isGroundedDown;
 
     public event Action PlayerIsFlying;
     public event Action PlayerIsLanding;
     public event Action<bool> OnJumpBlocked;
 
+    private bool _isSticking;
+
     private void OnEnable()
     {
         _stickingWall.IsStickingAnimation += PlaySticking;
         _stickingWall.IsStopAnimation += StopSticking;
+
+        _groundTrigger.Detected+=TouchGround;
+        _groundTrigger.Lost+=LostGround;
     }
 
     private void OnDisable()
     {
         _stickingWall.IsStickingAnimation -= PlaySticking;
         _stickingWall.IsStopAnimation -= StopSticking;
+
+        _groundTrigger.Detected-=TouchGround;
+        _groundTrigger.Lost-=LostGround;
     }
 
     private void FixedUpdate()
     {
-        PlayerStateNotifier();
+        NotifyPlayerState();
     }
 
-    private void PlayerStateNotifier()
+    private void NotifyPlayerState()
     {
-        _isGroundedDown = IsSurfaceDetected(_groundCheckPointDown);
-
         if (_isGroundedDown)
         {
             PlayerIsLanding?.Invoke();
@@ -52,19 +58,14 @@ public class GroundChecker : MonoBehaviour
         }
     }
 
-    private bool IsSurfaceDetected(Transform groundCheckPoint)
+    private void TouchGround()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(groundCheckPoint.position, _groundCheckRadius);
+        _isGroundedDown= true;
+    }
 
-        foreach (var hit in hits)
-        {
-            if (hit.GetComponent<Ground>() != null)
-            {
-                return true;
-            }
-        }
-
-        return false;
+    private void LostGround()
+    {
+        _isGroundedDown= false;
     }
 
     private void PlaySticking()

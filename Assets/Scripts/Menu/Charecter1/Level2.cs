@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Level2 : MonoBehaviour
 {
+    [SerializeField] private int indexLevl;
+
     public void LoadNextScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -10,7 +12,7 @@ public class Level2 : MonoBehaviour
 
         if (currentSceneIndex + 2 < totalScenes)
         {
-            SceneManager.LoadScene(currentSceneIndex + 2);
+            SceneManager.LoadScene(currentSceneIndex + indexLevl);
         }
     }
 }

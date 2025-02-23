@@ -15,7 +15,6 @@ public class Messege : MonoBehaviour
         _inventory.IsPicked-=SendMessege;
     }
 
-
     private void SendMessege()
     {
         if(_inventory.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody))

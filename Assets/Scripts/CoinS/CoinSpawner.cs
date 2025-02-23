@@ -20,13 +20,13 @@ public class CoinSpawner : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         foreach (Coin coin in _coinPool)
         {
             coin.PlayerPickedUp-=ReturnCoinToPool;
         }
-    }
+    }*/
 
     private void InitializePool()
     {
@@ -36,7 +36,7 @@ public class CoinSpawner : MonoBehaviour
             coin.gameObject.SetActive(false);
             _coinPool.Enqueue(coin);
 
-            coin.PlayerPickedUp+=ReturnCoinToPool;
+            //coin.PlayerPickedUp+=ReturnCoinToPool;
         }
     }
 
@@ -54,11 +54,13 @@ public class CoinSpawner : MonoBehaviour
             Coin coin = _coinPool.Dequeue();
             coin.transform.position = _spawnPoints[i].position;
             coin.gameObject.SetActive(true);
+            coin.PlayerPickedUp += ReturnCoinToPool;
         }
     }
 
     private void ReturnCoinToPool(Coin coin)
     {
+        coin.PlayerPickedUp -= ReturnCoinToPool;
         coin.gameObject.SetActive(false);
         _coinPool.Enqueue(coin);
     }

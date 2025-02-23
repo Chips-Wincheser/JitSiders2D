@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -9,8 +9,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private GroundChecker _groundDetector;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Health _health;
-    [SerializeField] private ÑontrollerDeath _ñontrollerDeath;
-    [SerializeField] private StickingWall _stickingWall=null;
+    [SerializeField] private ControllerDeath _ControllerDeath;
+    [SerializeField] private StickingWall _stickingWall = null;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _runClip;
@@ -34,7 +34,7 @@ public class PlayerAnimator : MonoBehaviour
         _groundDetector.PlayerIsFlying += PlayFlying;
         _groundDetector.PlayerIsLanding += StopFlying;
         _health.PlayerDie+=Die;
-        _ñontrollerDeath.Risen+=Alive;
+        _ControllerDeath.Risen+=Alive;
         _stickingWall.IsStickingAnimation+=PlayStiking;
         _stickingWall.IsStopAnimation+=StopStiking;
     }
@@ -47,7 +47,7 @@ public class PlayerAnimator : MonoBehaviour
         _groundDetector.PlayerIsFlying -= PlayFlying;
         _groundDetector.PlayerIsLanding -= StopFlying;
         _health.PlayerDie-=Die;
-        _ñontrollerDeath.Risen-=Alive;
+        _ControllerDeath.Risen-=Alive;
         _stickingWall.IsStickingAnimation-=PlayStiking;
         _stickingWall.IsStopAnimation-=StopStiking;
     }
@@ -74,7 +74,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         _animator.SetBool(_isRun, false);
 
-        if(_audioSource.clip == _runClip)
+        if (_audioSource.clip == _runClip)
             _audioSource.Stop();
     }
 
@@ -122,7 +122,7 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_isHooked, true);
         _isStiking=true;
     }
-    
+
     private void StopStiking()
     {
         _animator.SetBool(_isHooked, false);
