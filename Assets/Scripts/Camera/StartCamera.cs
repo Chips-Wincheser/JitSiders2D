@@ -23,6 +23,16 @@ public class StartCamera : MonoBehaviour
         StartCoroutine(MovePlayer());
     }
 
+    private void Update()
+    {
+        if (_onPlayer==false && Input.GetKeyDown(KeyCode.Space))
+        {
+            StopCoroutine(MovePlayer());
+            transform.position =_playerMover.transform.position;
+            Destroy(this);
+        }
+    }
+
     private IEnumerator MovePlayer()
     {
         yield return _waitForSeconds;

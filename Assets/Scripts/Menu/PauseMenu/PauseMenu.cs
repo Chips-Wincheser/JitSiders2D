@@ -12,6 +12,19 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
+        var mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            _blureEf = mainCamera.GetComponent<PostProcessVolume>();
+            if (_blureEf == null)
+            {
+                Debug.LogError("PostProcessVolume не найден на главной камере!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Main Camera не найдена в сцене!");
+        }
         _blureEf= Camera.main.GetComponent<PostProcessVolume>();
     }
 

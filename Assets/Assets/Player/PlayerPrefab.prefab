@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5676512901639645175}
   - component: {fileID: 5008906632165294589}
   - component: {fileID: 6723089993339087483}
-  - component: {fileID: 4615365841597206413}
-  - component: {fileID: 9204702752445960220}
+  - component: {fileID: 4488486225821672550}
+  - component: {fileID: 2532012533571906002}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -94,24 +94,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416920991825450443}
   m_Enabled: 1
---- !u!114 &4615365841597206413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416920991825450443}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 1a0cbc61f3e0b2943abcd971b9fdc718, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
---- !u!114 &9204702752445960220
+--- !u!114 &4488486225821672550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +109,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 5676512901639645175}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 343
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -165,12 +148,29 @@ MonoBehaviour:
       colorBlindnessType: 0
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 1
-  m_ShowCustomSorter: 1
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &2532012533571906002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416920991825450443}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 1a0cbc61f3e0b2943abcd971b9fdc718, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &1879587335793948116
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +530,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 3155646053823385542}
   _TakeCoinClip: {fileID: 8300000, guid: e477f07e2b4eb7e4b80fead9e90d2dae, type: 3}
-  _button: {fileID: 0}
   _hookUnknow: {fileID: 0}
   _jumpUnknow: {fileID: 0}
 --- !u!114 &8010522729804874883
@@ -605,7 +604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8ce96475ed30247aa1603adbf51a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wall: {fileID: 0}
   _slipperyMaterial: {fileID: 6200000, guid: b50e053a8cec77849b23362a4f13dbc2, type: 2}
   _inventory: {fileID: 998287545433272741}
 --- !u!1 &4431310265474413529
@@ -649,7 +647,7 @@ AudioSource:
   m_GameObject: {fileID: 4431310265474413529}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2851766301833840594, guid: 05a1f449a6d530341b34dfc21ffd2b36, type: 2}
   m_audioClip: {fileID: 8300000, guid: 2581168e20243ba4d992b0d25cffb26d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.529

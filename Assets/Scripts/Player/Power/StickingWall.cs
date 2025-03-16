@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class StickingWall : MonoBehaviour
 {
-    [SerializeField] private Wall _wall;
     [SerializeField] private PhysicsMaterial2D _slipperyMaterial;
     [SerializeField] private Inventory _inventory;
 
@@ -30,7 +29,7 @@ public class StickingWall : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent <Wall>(out Wall _))
         {
-            if(_inventory.CanHook)
+            if (_inventory.CanHook)
                 IsStickingAnimation?.Invoke();
         }
     }

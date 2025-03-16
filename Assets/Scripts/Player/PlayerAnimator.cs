@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -64,6 +63,7 @@ public class PlayerAnimator : MonoBehaviour
                 {
                     _audioSource.Stop();
                     _audioSource.clip = _runClip;
+                    _audioSource.pitch = Random.Range(0.9f, 1.25f);
                     _audioSource.Play();
                 }
             }

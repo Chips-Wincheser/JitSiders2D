@@ -26,6 +26,7 @@ public class TeleportNextLevl : MonoBehaviour
             {
                 _animator.SetBool(_lock, true);
                 spriteRenderer.sortingOrder = -50;
+                player.enabled = false;
 
                 StartCoroutine(Wait(collision));
             }
