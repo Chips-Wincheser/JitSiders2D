@@ -7,9 +7,9 @@ public class ControllerDeath : MonoBehaviour
     [SerializeField] private Health _health;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Mover _mover;
+    [SerializeField]private Rigidbody2D _rigidbody;
 
     private WaitForSeconds _newWaitForSeconds;
-    private Rigidbody2D _rigidbody;
 
     public event Action Risen;
 
@@ -17,7 +17,6 @@ public class ControllerDeath : MonoBehaviour
     {
         float delay = 2;
         _newWaitForSeconds= new WaitForSeconds(delay);
-        _rigidbody= GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()

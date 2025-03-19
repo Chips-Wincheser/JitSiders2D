@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _TakeCoinClip;
-    [SerializeField] private Image _hookUnknow;
-    [SerializeField] private Image _jumpUnknow;
 
     private List<Coin> _coins = new List<Coin>();
 
@@ -19,6 +15,7 @@ public class Inventory : MonoBehaviour
     public event Action IsPicked;
     public event Action UsedHook;
     public event Action AcquiredDoubleJump;
+    public event Action<bool,string> UsedPower;
 
     private void Start()
     {
@@ -27,15 +24,14 @@ public class Inventory : MonoBehaviour
         if (CanHook)
         {
             UsedHook?.Invoke();
+            UsedPower?.Invoke(CanHook,"hook");
         }
 
         if (CanDoubleJump)
         {
             AcquiredDoubleJump?.Invoke();
+            UsedPower?.Invoke(CanDoubleJump, "jump");
         }
-
-        _hookUnknow.gameObject.SetActive(!CanHook);
-        _jumpUnknow.gameObject.SetActive(!CanDoubleJump);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class UIHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField]private Animator _animator;
+    [SerializeField] private Animator _animator;
 
     private void Awake()
     {

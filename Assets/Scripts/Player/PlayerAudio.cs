@@ -1,53 +1,78 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
-    /*[SerializeField] private PlayerAnimator _playerAnimator;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _Run;
-    [SerializeField] private AudioClip _land;
+    [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private PlayerInput _playerInput;
 
-    private bool _soundPlaed=false;
+    [SerializeField] private AudioSource _audioSource;
+    
+    [SerializeField] private AudioClip _jump;
+    [SerializeField] private AudioClip _runClip;
+    [SerializeField] private AudioClip _LandClip;
+
+    private bool _canPlayJumpSound=false;
 
     private void OnEnable()
     {
-        _playerAnimator.Laned+=Landing;
-        _playerAnimator.PlayedJump+=PlayJumping;
+        _playerInput.Jumping+=JumpSound;
+        _playerInput.Runing+=RunSound;
+        _groundChecker.PlayerIsLanding += LandSound;
+        _groundChecker.OnJumpBlocked += UpdateJumpState;
+
     }
 
     private void OnDisable()
     {
-        _playerAnimator.Laned-=Landing;
-        _playerAnimator.PlayedJump-=PlayJumping;
+        _playerInput.Jumping-=JumpSound;
+        _playerInput.Runing-=RunSound;
+        _groundChecker.PlayerIsLanding -= LandSound;
+        _groundChecker.OnJumpBlocked -= UpdateJumpState;
+
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void JumpSound()
     {
-        if (collision.gameObject.TryGetComponent<Ground>(out Ground ground))
+        if(_canPlayJumpSound)
+            _audioSource.PlayOneShot(_jump,0.5f);
+    }
+    
+    private void LandSound()
+    {
+        _audioSource.PlayOneShot(_LandClip);
+    }
+
+    private void RunSound(float horizontal)
+    {
+
+        if (horizontal!=0 && _groundChecker.IsGrounded)
         {
-            
-            _audioSource.PlayOneShot(_land); Debug.Log("ѕроигрываем звук приземлени€ через основной AudioSource");
+            if (!_audioSource.isPlaying || _audioSource.clip != _runClip)
+            {
+                _audioSource.clip = _runClip;
+                _audioSource.loop = true;
+                _audioSource.pitch = Random.Range(0.9f, 1.1f);
+                _audioSource.Play();
+            }
+        }
+        else if (_audioSource.isPlaying && _audioSource.clip == _runClip)
+        {
+            StopSound();
         }
     }
 
-    private void Landing()
+    private void StopSound()
     {
-        
-        if (_soundPlaed==false)
+        if (_audioSource.isPlaying)
         {
-            _audioSource.Stop();
-            _audioSource.PlayOneShot(_land);
-            *//*_audioSource.clip = _land;
             _audioSource.loop = false;
-            _audioSource.Play();*//*
-            _soundPlaed = true;
+            _audioSource.clip = null;
+            _audioSource.pitch =1f;
         }
     }
 
-    private void PlayJumping()
+    private void UpdateJumpState(bool jumpBlocked)
     {
-        _soundPlaed=false;
-    }*/
+        _canPlayJumpSound=!jumpBlocked;
+    }
 }

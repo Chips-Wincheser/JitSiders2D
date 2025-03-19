@@ -15,6 +15,7 @@ public class Jumper : MonoBehaviour
     private bool _hasUsedDoubleJump = false;
 
     public event Action Jumped;
+    public event Action ParticalJumped;
 
     private void Awake()
     {
@@ -38,17 +39,20 @@ public class Jumper : MonoBehaviour
 
     private void Jump()
     {
-        if (_canJump)
+        if (_canJump || (_canDoubleJump && !_hasUsedDoubleJump))
         {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpHeight);
-            _canJump = false;
             Jumped?.Invoke();
-        }
-        else if (_canDoubleJump && !_hasUsedDoubleJump)
-        {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpHeight);
-            _hasUsedDoubleJump = true;
-            Jumped?.Invoke();
+
+            if (_canJump)
+            {
+                _canJump = false;
+            }
+            else
+            {
+                _hasUsedDoubleJump = true;
+                ParticalJumped?.Invoke();
+            }
         }
     }
 

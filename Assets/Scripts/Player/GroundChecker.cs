@@ -7,6 +7,7 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private StickingWall _stickingWall = null;
 
     private bool _isGroundedDown;
+    private bool _wasGrounded;
 
     public bool IsGrounded => _isGroundedDown;
 
@@ -41,20 +42,25 @@ public class GroundChecker : MonoBehaviour
 
     private void NotifyPlayerState()
     {
-        if (_isGroundedDown)
+        if (_isGroundedDown && !_wasGrounded)
         {
             PlayerIsLanding?.Invoke();
+            _wasGrounded = true;
             OnJumpBlocked?.Invoke(false);
         }
-        else if (_isSticking)
+        else if (!_isGroundedDown)
         {
-            PlayerIsFlying?.Invoke();
-            OnJumpBlocked?.Invoke(false);
-        }
-        else
-        {
-            PlayerIsFlying?.Invoke();
-            OnJumpBlocked?.Invoke(true);
+            _wasGrounded = false;
+            if (_isSticking)
+            {
+                PlayerIsFlying?.Invoke();
+                OnJumpBlocked?.Invoke(false);
+            }
+            else
+            {
+                PlayerIsFlying?.Invoke();
+                OnJumpBlocked?.Invoke(true);
+            }
         }
     }
 

@@ -1,37 +1,40 @@
-using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class FlyBird : MonoBehaviour
 {
-    [SerializeField] private Transform _transform;
+    [SerializeField] private float _speed;
+    [SerializeField] private Transform _waypointsContainer;
+    [SerializeField] private float _stopThreshold = 0.1f;
 
-    private Rigidbody2D _rigidbody2D;
-    private WaitForSeconds _waitForSeconds;
+    private Transform[] _points;
 
-    private void Awake()
-    {
-        _waitForSeconds = new WaitForSeconds(10);
-        if (gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody2D))
-            _rigidbody2D = rigidbody2D;
-    }
+    private int _currentWaypoint = 0;
+    private Vector3 _direction;
 
     private void Start()
     {
-        StartCoroutine(Fly());
+        _points = new Transform[_waypointsContainer.childCount];
+
+        for (int i = 0; i < _points.Length; i++)
+        {
+            _points[i] =_waypointsContainer.GetChild(i);
+        }
     }
 
     private void Update()
     {
-        _rigidbody2D.velocity = new Vector2(-5,0 );
-    }
+        _direction=_points[_currentWaypoint].position-transform.position;
 
-    private IEnumerator Fly()
-    {
-        for (int i = 0; i < 10; i++)
+        if (_direction.sqrMagnitude<_stopThreshold)
         {
-            yield return _waitForSeconds;
-            transform.position =_transform.position;
+            _currentWaypoint = ++_currentWaypoint % _points.Length;
         }
+        else if(_currentWaypoint==0)
+        {
+            transform.position=_points[_currentWaypoint].position;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, _points[_currentWaypoint].position,
+            _speed * Time.deltaTime);
     }
 }

@@ -11,17 +11,12 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private ControllerDeath _ControllerDeath;
     [SerializeField] private StickingWall _stickingWall = null;
 
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _runClip;
-    [SerializeField] private AudioClip _LandClip;
-
     private int _fly = Animator.StringToHash("fly");
     private int _isRun = Animator.StringToHash("isRun");
     private int _isDie = Animator.StringToHash("IsDie");
     private int _isHooked = Animator.StringToHash("IsHooked");
 
     private bool _isJumped = false;
-    private bool _inJump = true;
     private bool _hasLanded = true;
     private bool _isStiking = false;
 
@@ -56,33 +51,18 @@ public class PlayerAnimator : MonoBehaviour
         if (!_isJumped && horizontal != 0)
         {
             _animator.SetBool(_isRun, true);
-
-            if (!_isJumped && !_inJump)
-            {
-                if (_audioSource.clip != _runClip || !_audioSource.isPlaying)
-                {
-                    _audioSource.Stop();
-                    _audioSource.clip = _runClip;
-                    _audioSource.pitch = Random.Range(0.9f, 1.25f);
-                    _audioSource.Play();
-                }
-            }
         }
     }
 
     private void StopRunning(float horizontal)
     {
         _animator.SetBool(_isRun, false);
-
-        if (_audioSource.clip == _runClip)
-            _audioSource.Stop();
     }
 
     private void PlayJumping()
     {
         _animator.SetInteger(_fly, 1);
         _isJumped = true;
-        _inJump = true;
     }
 
     private void PlayFlying()
@@ -97,7 +77,6 @@ public class PlayerAnimator : MonoBehaviour
         }
 
         _isJumped = false;
-        _inJump = true;
         _hasLanded = false;
     }
 
@@ -106,12 +85,6 @@ public class PlayerAnimator : MonoBehaviour
         if (!_isJumped && _hasLanded==false && _isStiking==false)
         {
             _animator.SetInteger(_fly, -1);
-            _inJump = false;
-
-            if (_LandClip != null)
-            {
-                _audioSource.PlayOneShot(_LandClip);
-            }
 
             _hasLanded=true;
         }
