@@ -4,7 +4,7 @@ public class CameraTeleport : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private Transform tombler;
-    [SerializeField] private float _stopThreshold = 0.1f;
+    [SerializeField] private float _stopThreshold;
 
     private void Update()
     {

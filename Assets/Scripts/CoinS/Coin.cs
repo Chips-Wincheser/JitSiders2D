@@ -3,13 +3,18 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public event Action<Coin> PlayerPickedUp;
+    public bool IsUp {  get; private set; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public event Action<Coin> Collected;
+
+    private void Start()
     {
-        if (collision.TryGetComponent<Inventory>(out Inventory playerInventory))
-        {
-            PlayerPickedUp?.Invoke(this);
-        }
+        IsUp = false;
+    }
+
+    public void Collect()
+    {
+        IsUp=true;
+        Collected?.Invoke(this);
     }
 }

@@ -1,67 +1,27 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] private Coin _coinPrefab;
-    [SerializeField] private int _poolSize = 3;
     [SerializeField] private Transform[] _spawnPoints;
 
-    private Queue<Coin> _coinPool = new Queue<Coin>();
-
-    private void Awake()
+    private void Start()
     {
-        InitializePool();
-        SpawnCoin();
+        SpawnCoins();
+    }
 
-        if (_poolSize > _spawnPoints.Length)
+    private void SpawnCoins()
+    {
+        foreach (var point in _spawnPoints)
         {
-            _poolSize = _spawnPoints.Length;
+            Coin coin = Instantiate(_coinPrefab, point.position, Quaternion.identity);
+            coin.Collected += OnCoinCollected;
         }
     }
 
-    /*private void OnDisable()
+    private void OnCoinCollected(Coin coin)
     {
-        foreach (Coin coin in _coinPool)
-        {
-            coin.PlayerPickedUp-=ReturnCoinToPool;
-        }
-    }*/
-
-    private void InitializePool()
-    {
-        for (int i = 0; i < _poolSize; i++)
-        {
-            Coin coin = Instantiate(_coinPrefab, transform);
-            coin.gameObject.SetActive(false);
-            _coinPool.Enqueue(coin);
-
-            //coin.PlayerPickedUp+=ReturnCoinToPool;
-        }
-    }
-
-    private void SpawnCoin()
-    {
-        int spawnCount = _coinPool.Count;
-
-        if (spawnCount > _spawnPoints.Length)
-        {
-            spawnCount = _spawnPoints.Length;
-        }
-
-        for (int i = 0; i < spawnCount; i++)
-        {
-            Coin coin = _coinPool.Dequeue();
-            coin.transform.position = _spawnPoints[i].position;
-            coin.gameObject.SetActive(true);
-            coin.PlayerPickedUp += ReturnCoinToPool;
-        }
-    }
-
-    private void ReturnCoinToPool(Coin coin)
-    {
-        coin.PlayerPickedUp -= ReturnCoinToPool;
-        coin.gameObject.SetActive(false);
-        _coinPool.Enqueue(coin);
+        coin.Collected -= OnCoinCollected;
+        Destroy(coin.gameObject);
     }
 }

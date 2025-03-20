@@ -29,7 +29,6 @@ public class StartCamera : MonoBehaviour
         {
             StopCoroutine(MovePlayer());
             transform.position =_playerMover.transform.position;
-            Destroy(this);
         }
     }
 

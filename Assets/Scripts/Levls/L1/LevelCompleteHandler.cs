@@ -20,7 +20,7 @@ public class LevelCompleteHandler : MonoBehaviour
         _teleport.FinishedLevl-=Finish;
     }
 
-    private void Finish(Collider2D collision)
+    private void Finish()
     {
         _FinishCanvas.gameObject.SetActive(true);
 

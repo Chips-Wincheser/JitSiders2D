@@ -11,7 +11,7 @@ public class TeleportNextLevl : MonoBehaviour
 
     private WaitForSeconds _waitForSeconds;
 
-    public event Action<Collider2D> FinishedLevl;
+    public event Action FinishedLevl;
 
     private void Start()
     {
@@ -36,6 +36,6 @@ public class TeleportNextLevl : MonoBehaviour
     private IEnumerator Wait(Collider2D collision)
     {
         yield return _waitForSeconds;
-        FinishedLevl?.Invoke(collision);
+        FinishedLevl?.Invoke();
     }
 }

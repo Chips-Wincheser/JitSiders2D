@@ -4,12 +4,14 @@ public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private Collector _collector;
 
     [SerializeField] private AudioSource _audioSource;
     
     [SerializeField] private AudioClip _jump;
     [SerializeField] private AudioClip _runClip;
     [SerializeField] private AudioClip _LandClip;
+    [SerializeField] private AudioClip _TakeCoinClip;
 
     private bool _canPlayJumpSound=false;
 
@@ -19,7 +21,7 @@ public class PlayerAudio : MonoBehaviour
         _playerInput.Runing+=RunSound;
         _groundChecker.PlayerIsLanding += LandSound;
         _groundChecker.OnJumpBlocked += UpdateJumpState;
-
+        _collector.PickedUpCoin +=TakeCoinSound;
     }
 
     private void OnDisable()
@@ -28,6 +30,7 @@ public class PlayerAudio : MonoBehaviour
         _playerInput.Runing-=RunSound;
         _groundChecker.PlayerIsLanding -= LandSound;
         _groundChecker.OnJumpBlocked -= UpdateJumpState;
+        _collector.PickedUpCoin -=TakeCoinSound;
 
     }
 
@@ -59,6 +62,11 @@ public class PlayerAudio : MonoBehaviour
         {
             StopSound();
         }
+    }
+
+    private void TakeCoinSound()
+    {
+        _audioSource.PlayOneShot(_TakeCoinClip);
     }
 
     private void StopSound()

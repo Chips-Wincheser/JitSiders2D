@@ -6,17 +6,18 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private Image _health;
+    [SerializeField] private Camera _mainCamera;
 
     private PostProcessVolume _blureEf;
     private bool _isPaused=false;
 
     private void Start()
     {
-        var mainCamera = Camera.main;
+        
 
-        if (mainCamera != null)
+        if (_mainCamera != null)
         {
-            _blureEf = mainCamera.GetComponent<PostProcessVolume>();
+            _blureEf = _mainCamera.GetComponent<PostProcessVolume>();
 
             if (_blureEf == null)
             {

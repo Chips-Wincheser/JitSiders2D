@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6723089993339087483}
   - component: {fileID: 4488486225821672550}
   - component: {fileID: 2532012533571906002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 1416920991825450443}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000011920929, y: 0.5, z: -6.666667}
+  m_LocalPosition: {x: -0.00000011920929, y: 0, z: -6.666667}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,7 +101,7 @@ Camera:
   far clip plane: 1000
   field of view: 26.991467
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 9209496885837331231}
   - component: {fileID: 8590096757512851400}
   - component: {fileID: 6836346740483980690}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,7 @@ Transform:
   m_GameObject: {fileID: 3404165139558844340}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14666685, y: -0.9266667, z: 0}
+  m_LocalPosition: {x: -0.14666685, y: 0.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -331,6 +331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerMover: {fileID: 6543007863268768844}
   _camera: {fileID: 6836346740483980690}
+  _speed: 5
+  _value: 1.5
 --- !u!114 &6836346740483980690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +369,7 @@ GameObject:
   - component: {fileID: 133600394108811820}
   - component: {fileID: 2757395616954960347}
   - component: {fileID: 5127250901640437598}
+  - component: {fileID: 8493052519467480464}
   m_Layer: 8
   m_Name: PlayerVeiw
   m_TagString: Untagged
@@ -434,7 +437,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1457621704, guid: 7c12a0f65cf25c8429b04edf4cb4a603, type: 3}
+  m_Sprite: {fileID: -239768619, guid: f55178605fea2d64685493e5b0c69357, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -489,9 +492,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &130135563561552544
 CapsuleCollider2D:
@@ -525,8 +528,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08030208, y: -0.80301654}
-  m_Size: {x: 0.66936874, y: 1.8939676}
+  m_Offset: {x: 0.05915038, y: -0.57059544}
+  m_Size: {x: 0.51442146, y: 1.847484}
   m_Direction: 0
 --- !u!114 &998287545433272741
 MonoBehaviour:
@@ -540,8 +543,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1c02cfbf800484a89fbb10f17e2fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 3155646053823385542}
-  _TakeCoinClip: {fileID: 8300000, guid: e477f07e2b4eb7e4b80fead9e90d2dae, type: 3}
 --- !u!114 &6543007863268768844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +647,19 @@ MonoBehaviour:
   _audioSource: {fileID: 3155646053823385542}
   _deathClip: {fileID: 8300000, guid: 90bff87ccd12bbf4aa2f0301d73dcab0, type: 3}
   IsDead: 0
+--- !u!114 &8493052519467480464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686883685467233801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62be5305c1b7e1d42b9cf9bb0f89aad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: {fileID: 998287545433272741}
 --- !u!1 &4431310265474413529
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,10 +803,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundChecker: {fileID: 8886719226499672403}
   _playerInput: {fileID: 8159358770258774110}
+  _collector: {fileID: 8493052519467480464}
   _audioSource: {fileID: 3155646053823385542}
   _jump: {fileID: 8300000, guid: 8b3065561ee26b14d89cf7bc837804fd, type: 3}
   _runClip: {fileID: 8300000, guid: 6ca61d5331d6ee046922f55b588cf297, type: 3}
   _LandClip: {fileID: 8300000, guid: 892433ec3fb84aa42a583ca5f6f6373b, type: 3}
+  _TakeCoinClip: {fileID: 8300000, guid: e477f07e2b4eb7e4b80fead9e90d2dae, type: 3}
 --- !u!1 &5642531216169675271
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,8 +889,8 @@ Transform:
   m_GameObject: {fileID: 5800530227644899387}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: -1.79, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.049728, y: -1.6611, z: 0}
+  m_LocalScale: {x: 0.77019, y: 0.77019, z: 0.77019}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4788519235210871199}
@@ -911,9 +927,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.003795306, y: 0}
+  m_Offset: {x: -0.009751133, y: 0.08653319}
   serializedVersion: 2
-  m_Radius: 0.13944721
+  m_Radius: 0.32092887
 --- !u!114 &3153346585510726330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5819,7 +5835,7 @@ GameObject:
   - component: {fileID: 8977152044334235025}
   - component: {fileID: 8271461040381270888}
   - component: {fileID: 3146486159294360236}
-  - component: {fileID: 495007886091912324}
+  - component: {fileID: 5271075030471485554}
   m_Layer: 0
   m_Name: Speed
   m_TagString: Untagged
@@ -10640,7 +10656,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &495007886091912324
+--- !u!114 &5271075030471485554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10649,11 +10665,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8922772584767103429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8baf0e08ff18eec49ae805d26a4c3085, type: 3}
+  m_Script: {fileID: 11500000, guid: d1dc847161190554cb22c42c5c34ae23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMover: {fileID: 6543007863268768844}
-  _camera: {fileID: 6836346740483980690}
 --- !u!1001 &6935090483103859971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10766,6 +10781,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 3792513267191422880, guid: c7238f2e24677624dac8fc9043dcc2de, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 5008906632165294589}
     - target: {fileID: 5438783705556695355, guid: c7238f2e24677624dac8fc9043dcc2de, type: 3}
       propertyPath: m_Value
       value: 0.7

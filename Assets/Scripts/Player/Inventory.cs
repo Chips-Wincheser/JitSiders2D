@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _TakeCoinClip;
-
-    private List<Coin> _coins = new List<Coin>();
+    public List<Coin> Coins { get; private set; }
 
     public bool CanHook { get; private set; }
     public bool CanDoubleJump { get; private set; }
@@ -19,6 +16,8 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        Coins= new List<Coin>();
+
         LoadInventory();
 
         if (CanHook)
@@ -36,12 +35,6 @@ public class Inventory : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Coin>(out Coin coin))
-        {
-            _coins.Add(coin);
-            _audioSource.PlayOneShot(_TakeCoinClip);
-        }
-
         if (collision.TryGetComponent<Hook>(out Hook _))
         {
             IsPicked?.Invoke();
@@ -65,7 +58,7 @@ public class Inventory : MonoBehaviour
 
     public List<Coin> ShowCoinsList()
     {
-        return _coins;
+        return Coins;
     }
 
     private void SaveInventory()

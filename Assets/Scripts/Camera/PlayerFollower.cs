@@ -1,36 +1,31 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerFollower : MonoBehaviour
 {
     [SerializeField] private Mover _playerMover;
     [SerializeField] private StartCamera _camera;
+    [SerializeField] private int _speed;
+    [SerializeField]private float _value;
 
-    private float _value=0f;
     private bool _onPlayer = false;
 
     private void OnEnable()
     {
-        if (_camera != null)
-        {
-            _camera.AimedOnPlayer+=TomblerOnPlayer;
-        }
-        else
-        {
-            _value=1f;
-        }
+        _camera.AimedOnPlayer+=TomblerOnPlayer;
     }
 
     private void OnDisable()
     {
-        if (_camera != null)
-            _camera.AimedOnPlayer-=TomblerOnPlayer;
+        _camera.AimedOnPlayer-=TomblerOnPlayer;
     }
 
     private void LateUpdate()
     {
-        if (_onPlayer || _camera == null)
-            transform.position=new Vector3(_playerMover.transform.position.x, _playerMover.transform.position.y-_value, transform.position.z);
+        if (_onPlayer)
+        {
+            Vector3 targetPosition = new Vector3(_playerMover.transform.position.x, _playerMover.transform.position.y+_value, transform.position.z);
+            transform.position=Vector3.Lerp(transform.position, targetPosition, _speed*Time.deltaTime);
+        }
     }
 
     private void TomblerOnPlayer()

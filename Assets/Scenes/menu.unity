@@ -5045,8 +5045,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _masterMixer: {fileID: 24100000, guid: 05a1f449a6d530341b34dfc21ffd2b36, type: 2}
   _volumeMultiplier: 20
-  _mixerName: BackMusic
-  _slider: {fileID: 0}
+  _mixerNames:
+  - BackMusic
+  - Sound
+  - Master
+  _sliders: []
 --- !u!1 &795656559
 GameObject:
   m_ObjectHideFlags: 0
@@ -7725,9 +7728,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5844679691987007977, guid: 575e181924b5b354eaf16f953ea371c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -67.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7176674512222181329, guid: 575e181924b5b354eaf16f953ea371c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.19
+      value: 19.31
       objectReference: {fileID: 0}
     - target: {fileID: 7176674512222181329, guid: 575e181924b5b354eaf16f953ea371c5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7778,6 +7785,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1378044740458455872, guid: 82f4fcc24235b3a46affdce83c36be12, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -43
+      objectReference: {fileID: 0}
     - target: {fileID: 1735805817031077035, guid: 82f4fcc24235b3a46affdce83c36be12, type: 3}
       propertyPath: m_Name
       value: Bird2

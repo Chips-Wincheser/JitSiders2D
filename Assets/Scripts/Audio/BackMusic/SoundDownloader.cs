@@ -22,9 +22,11 @@ public class SoundDownloader : MonoBehaviour
                 float value;
                 value=PlayerPrefs.GetFloat(_mixerNames[i]);
                 _masterMixer.SetFloat(_mixerNames[i], Mathf.Log10(value) * _volumeMultiplier);
-            
-                if(_sliders != null )
+
+                if (_sliders.Length!=0)
+                {
                     _sliders[i].value = value;
+                }
             }
 
             PlayerPrefs.Save();
