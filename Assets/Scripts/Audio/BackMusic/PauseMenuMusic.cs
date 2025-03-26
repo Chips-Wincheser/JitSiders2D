@@ -3,19 +3,24 @@ using UnityEngine.Audio;
 
 public class PauseMenuMusic : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioMixer _audioMixer;
-    [SerializeField] private AudioSource _BackgroundMusic;
+    private const float MinVolume = -80f;
+
+    [SerializeField] private AudioMixer _masterMixer;
+    [SerializeField] private AudioSource _BackMusicInPauseMenu;
+
+    private string _mixerBackMusic= "BackMusic";
+    private string _mixerSound= "Sound";
 
     private void OnEnable()
     {
-        _audioSource.Play();
-        _BackgroundMusic.Pause();
+        _masterMixer.SetFloat(_mixerBackMusic, MinVolume);
+        _masterMixer.SetFloat(_mixerSound, MinVolume);
+
+        _BackMusicInPauseMenu.Play();
     }
 
     private void OnDisable()
     {
-        _audioSource.Pause();
-        _BackgroundMusic.Play();
+        _BackMusicInPauseMenu.Pause();
     }
 }

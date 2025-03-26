@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
 public class SoundDownloader : MonoBehaviour
 {
     [SerializeField] private AudioMixer _masterMixer;
     [SerializeField] private float _volumeMultiplier = 20f;
     [SerializeField] private string[] _mixerNames;
-    [SerializeField] private Slider[] _sliders;
+    [SerializeField] private UnityEngine.UI.Slider[] _sliders;
 
     private void Start()
     {
